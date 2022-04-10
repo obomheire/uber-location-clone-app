@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, } from "react-native";
 import React from "react";
 import tw from "tailwind-react-native-classnames";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
@@ -6,6 +6,8 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { setDestination } from "../slices/navSlice";
+import NavFavourites from "./NavFavourites";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 const NavigateCard = () => {
   const dispatch = useDispatch();
@@ -28,8 +30,8 @@ const NavigateCard = () => {
                   location: details.geometry.location,
                   description: data.description,
                 })
-                );
-                navigation.navigate('RideOptionsCard')
+              );
+              navigation.navigate("RideOptionsCard");
             }}
             enablePoweredByContainer={false}
             query={{
@@ -40,6 +42,25 @@ const NavigateCard = () => {
             debounce={400}
           />
         </View>
+        <NavFavourites />
+      </View>
+      <View
+        style={tw`flex-row bg-white justify-evenly py-2 mt-auto border-t border-gray-100`}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("RideOptionsCard")}
+          style={tw`flex flex-row justify-between bg-black w-24 px-4 py-3 rounded-full`}
+        >
+          <AntDesign name="car" size={16} color="white" />
+          <Text style={tw`text-white text-center`}>Rides</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={tw`flex flex-row justify-between w-24 px-4 py-3 rounded-full`}
+        >
+          <Ionicons name="fast-food-outline" size={16} color="black" />
+          <Text style={tw`text-center`}>Eats</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
